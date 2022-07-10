@@ -10,7 +10,8 @@ def populate(filename: str, jlpt_level: str = 'N5') -> None:
         "た行", "な行", "は行", 
         "ま行", "や行", "ら行", "わ行"
     ]
-
+    
+    file.write(f"Getting words from Wikipedia's JLPT level {jlpt_level}\n")
     for gyou in gojuon:
         page = get(f"https://en.wiktionary.org/wiki/Appendix:JLPT/{jlpt_level}/{gyou}").content
         soup = BeautifulSoup(page, "html.parser")
@@ -31,15 +32,17 @@ def main() -> None:
     option = int(input("Your option is: "))
 
     if option == -1:
-        exit(0)
+        print("Exiting...")
+        exit(-1)
 
     if option == 0:
         populate(argv[1], argv[2])
         print("All words were exported from Wikipedia successfully")
-        exit(0)
-
+    
     if option == 1:
         word = input("Enter the word: ")
         search_word(argv[1], word)
-        exit(0)
+    
+    exit(0)
+
 main()
